@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: database_pg
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_HOST: localhost
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+        #  server:
+  #    container_name: nestJs_server
+  #    restart: always
+  #    build: server
+  #    ports:             <- dependency prisma ORM
+  #                          doesn't work on
+  #                          linux architecture
+  #      - "3001:3001"
+  #      - "8080:8080"
+  #    networks:
+  #      - main
+
+  client:
+    container_name: front_end
+    build: ./client
+    restart: always
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Needed to enable the internal
+    # (host <-> container) communication
+    # to make the stack work in a hybrid mode
+
+volumes:
+  db:
+    driver: local
