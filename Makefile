@@ -1,15 +1,16 @@
 # ------------ INITIAL --------------------------------
 # ------------ INIT COMMANDS --------------------------
-start-a: compose-down run-stack
+start-a: init-env compose-down run-stack
 # This command will run the stack in a hybrid mode
 # Server and prisma will run locally.
 # This is due to the lack of support by the ORM
 # ( Prisma ) to linux architecture.
 # -----------------------------------------------------
 # start stack with only the database in a container
-start-b: compose-down all
+start-b:init-env compose-down all
 # -----------------------------------------------------
-
+init-env:
+	cp  ./.env.template ./server/.env
 # ------------ CLI SHORTCUTS -------------------------
 run-stack: compose-up web only-server
 # in case you want to run the stack mostly entirely
