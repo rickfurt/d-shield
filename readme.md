@@ -1,4 +1,4 @@
-Stack Documentation
+# Stack Documentation
 
 This documentation provides an overview and explanation of the commands to run the stack presented in this repo. The stack includes a server, client, and a database. It also outlines the initial setup and the steps required to run the stack locally and on Docker containers.
 Prerequisites
@@ -22,4 +22,4 @@ The initial setup includes two start commands, start-a and start-b, which run th
   - run `make start-b`
     - This will run the whole stack locally and only the DB through docker
 
----
+If upon the initial loading of the browser, no data is visible, it is recommended to refresh the page. This issue may occur due to the seed not having completed its process. By refreshing the page, the data display should be updated once the seed finishes loading.
