@@ -1,0 +1,22 @@
+# Created to run the DB alone if needed
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: database_pg_standalone
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_HOST: localhost
+    ports:
+      - "5432:5432"
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
