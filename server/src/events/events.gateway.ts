@@ -1,4 +1,5 @@
 import {
+  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
@@ -9,7 +10,11 @@ import {
 import { Server } from 'ws';
 import { SensorService } from '../sensor.service';
 
-@WebSocketGateway(8080)
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
 export class EventsGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -19,11 +24,9 @@ export class EventsGateway
   server: Server;
 
   // This method will be executed when the WebSocket server is initialized
-  afterInit(server: Server) {
-    server.emit('testing', { do: 'stuff' });
+  afterInit() {
     console.log('WebSocket server initialized');
   }
-
   // This method will be executed when a new client connects to the WebSocket server
   handleConnection(client: any) {
     this.server.emit('testing', { do: 'stuff' });
@@ -35,8 +38,10 @@ export class EventsGateway
     console.log(`Client disconnected: ${client.id}`);
   }
 
-  @SubscribeMessage('events') // 'events' is the message type to subscribe to
-  async onEvent() {
-    return await this.sensorService.sensors();
+  @SubscribeMessage('onMessage')
+  async handleMessage(): Promise<any> {
+    const data = await this.sensorService.sensors();
+    this.server.emit('message', data);
+    return data;
   }
 }

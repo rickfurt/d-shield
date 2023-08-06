@@ -1,11 +1,11 @@
 .offline {
-    animation: pulseDanger .5s infinite alternate ease-in-out !important;
-    border-bottom: 1px solid transparent;
+  animation: pulseDanger 0.5s infinite alternate ease-in-out !important;
+  border-bottom: 1px solid transparent;
 }
 
 @keyframes pulseDanger {
-    to {
-        background-color: #ff0000;
-        border-bottom: 1px solid red;
-    }
+  to {
+    background-color: #ff0000;
+    border-bottom: 1px solid red;
+  }
 }
